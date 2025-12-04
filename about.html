@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hidden Cost Index — About & FAQ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020617; --accent: #38bdf8; --accent-2: #6366f1;
+      --text-main: #f9fafb; --text-muted: #9ca3af; --border-subtle: #1f2937;
+      --card-radius: 14px; --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.6);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: var(--font-sans);
+      background: radial-gradient(circle at top left, #111827 0, #020617 42%, #000 100%);
+      color: var(--text-main); -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .page {
+      max-width: 960px; margin: 0 auto; padding: 16px 16px 32px;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 14px; padding: 12px 0 14px; flex-wrap: wrap;
+    }
+    .brand { display: flex; gap: 10px; align-items: center; }
+    .brand-logo {
+      width: 30px; height: 30px; border-radius: 999px;
+      background: radial-gradient(circle at 20% 20%, #38bdf8, #0ea5e9 35%, #020617 70%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; color: #e0f2fe;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.7);
+    }
+    .brand-text { display: flex; flex-direction: column; gap: 1px; }
+    .brand-main { font-size: 17px; font-weight: 600; }
+    .brand-sub { font-size: 11px; color: var(--text-muted); }
+    .nav-links {
+      display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: var(--text-muted);
+    }
+    .nav-link {
+      padding: 5px 9px; border-radius: 999px; border: 1px solid transparent;
+    }
+    .nav-link:hover {
+      border-color: rgba(148, 163, 184, 0.7); background: rgba(15, 23, 42, 0.9);
+      color: var(--text-main);
+    }
+    .nav-link.active {
+      border-color: rgba(148, 163, 184, 0.7); background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+    }
+    main { flex: 1; }
+    .card {
+      background: radial-gradient(circle at top, rgba(148, 163, 184, 0.2), transparent 55%),
+                  linear-gradient(140deg, rgba(15, 23, 42, 0.97), rgba(15, 23, 42, 0.94));
+      border-radius: 18px; border: 1px solid rgba(55, 65, 81, 0.95);
+      box-shadow: var(--shadow-soft); padding: 18px 18px 16px; margin-bottom: 14px;
+    }
+    h1 { font-size: 22px; margin: 0 0 6px; }
+    h2 { font-size: 15px; margin: 12px 0 6px; }
+    h3 { font-size: 13px; margin: 8px 0 4px; }
+    p {
+      font-size: 12px; color: var(--text-muted); line-height: 1.6; margin: 4px 0 6px;
+    }
+    .tagline { font-size: 12px; color: var(--text-muted); max-width: 620px; }
+    .faq-item {
+      margin-top: 6px; padding-top: 6px; border-top: 1px dashed rgba(55, 65, 81, 0.9);
+    }
+    .faq-q { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .faq-a { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+    .grid-2 {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 14px;
+    }
+    @media (max-width: 800px) {
+      .grid-2 { grid-template-columns: minmax(0, 1fr); }
+    }
+    .list { margin: 4px 0 4px 14px; padding: 0; }
+    .list li {
+      font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 3px;
+    }
+    .contact-box {
+      margin-top: 6px; padding: 8px 10px; border-radius: 10px;
+      border: 1px solid rgba(55, 65, 81, 0.9); background: rgba(15, 23, 42, 0.96);
+      font-size: 12px; color: var(--text-muted);
+    }
+    .contact-box span { color: #e5e7eb; }
+    footer {
+      padding-top: 10px; font-size: 11px; color: var(--text-muted);
+      border-top: 1px solid rgba(31, 41, 55, 0.9); margin-top: 12px;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">H</div>
+        <div class="brand-text">
+          <div class="brand-main">Hidden Cost Index</div>
+          <div class="brand-sub">About & FAQ · hiddencostindex.co.za</div>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="methodology.html" class="nav-link">Methodology</a>
+        <span class="nav-link active">About</span>
+      </nav>
+    </header>
+
+```
+<main>
+  <section class="card">
+    <h1>About Hidden Cost Index</h1>
+    <p class="tagline">
+      HiddenCostIndex.co.za exists to make one thing measurable: how much of a household's income is silently
+      diverted into security, load shedding, private healthcare, transport and crime-related costs just to maintain a
+      basic standard of living in South Africa.
+    </p>
+  </section>
+
+  <section class="card">
+    <div class="grid-2">
+      <div>
+        <h2>What this project is</h2>
+        <ul class="list">
+          <li>A descriptive model of household-level "system failure costs".</li>
+          <li>A public dashboard that anyone can use to run their own numbers.</li>
+          <li>A way to compare South African cities to each other and to global cities.</li>
+          <li>A starting point for media, researchers and policymakers to quantify what is usually anecdotal.</li>
+        </ul>
+      </div>
+      <div>
+        <h2>What it is not</h2>
+        <ul class="list">
+          <li>Not financial advice, a tax calculator or a budgeting service.</li>
+          <li>Not a replacement for professional financial planning.</li>
+          <li>Not an official government or corporate index.</li>
+          <li>Not a prediction model; it describes current structure, not future outcomes.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Frequently asked questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Is the Hidden Cost Index political?</div>
+      <div class="faq-a">
+        The index is descriptive. It does not endorse parties, policies or candidates. It simply quantifies how much
+        money households spend on survival requirements such as security, backup power and private health, on top of
+        normal living costs and taxes. What to do with that information is a separate conversation.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Where do the numbers come from?</div>
+      <div class="faq-a">
+        Personal results are based entirely on user-entered figures. Scenario comparisons (Johannesburg, Cape Town,
+        Melbourne, Shenzhen) use stylised, rounded values derived from public data, cost-of-living datasets and
+        typical household profiles. The exact assumptions are documented in the city comparison tab and methodology
+        page.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I rely on this for financial decisions?</div>
+      <div class="faq-a">
+        No. The tool is designed for awareness and comparison. It can highlight structural pressure on a household,
+        but it does not replace detailed budgeting, tax planning or professional financial advice.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Do you store my data?</div>
+      <div class="faq-a">
+        The prototype calculator runs entirely in your browser. No personal financial data is transmitted to a
+        server or stored centrally. If this changes in a future release (for example, to support saved profiles or
+        aggregate statistics), it will be clearly disclosed and governed by a privacy policy.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Can I use the index in reports or articles?</div>
+      <div class="faq-a">
+        Yes. You are welcome to reference the Hidden Cost Index and screenshot or cite dashboard outputs, provided
+        you attribute "HiddenCostIndex.co.za" and do not misrepresent the model's scope. For formal publications,
+        linking to the methodology page is recommended.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Will there be an API?</div>
+      <div class="faq-a">
+        The roadmap includes a simple API for city-level HCI benchmarks and scenario data, so that journalists,
+        researchers and developers can integrate the index into their own tools. Details will appear here once
+        stabilised.
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Contact & feedback</h2>
+    <p>
+      This project is evolving. Real-world feedback from households, practitioners and researchers is essential if
+      the index is going to stay honest and useful.
+    </p>
+    <div class="contact-box">
+      For comments on the model, suggestions or collaboration enquiries, you can reach the maintainer at:
+      <br />
+      <span>info@hiddencostindex.co.za</span>
+    </div>
+
+    <h3 style="margin-top:10px;">Disclaimer</h3>
+    <p>
+      HiddenCostIndex.co.za is provided "as is", without any warranty. Use it at your own risk. No liability is
+      accepted for decisions made on the basis of the index, the dashboard, or any associated documentation.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> HiddenCostIndex.co.za · About</span>
+  <span><a href="dashboard.html">Open the dashboard</a></span>
+</footer>
+```
+
+  </div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

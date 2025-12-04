@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hidden Cost Index — Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0b1017;
+      --bg-soft: #151b24;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --accent-2: #6366f1;
+      --danger: #fb7185;
+      --good: #4ade80;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: #27303f;
+      --card-radius: 12px;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.45);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+```
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: radial-gradient(circle at top left, #111827 0, #020617 45%, #020617 100%);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; text-decoration: none; }
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: radial-gradient(circle at 20% 20%, #38bdf8, #0ea5e9 35%, #020617 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e5f6ff;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+}
+
+.brand-title { display: flex; flex-direction: column; gap: 2px; }
+.brand-title-main { font-weight: 600; font-size: 18px; }
+.brand-title-sub { font-size: 12px; color: var(--text-muted); }
+
+.tabs {
+  display: flex;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 999px;
+  padding: 4px;
+  border: 1px solid rgba(51, 65, 85, 0.8);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  flex-wrap: wrap;
+}
+
+.tab {
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--text-muted);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  white-space: nowrap;
+}
+
+.tab.active {
+  background: linear-gradient(135deg, #38bdf8, #6366f1);
+  color: #0b1120;
+  font-weight: 600;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.55);
+}
+
+main { flex: 1; margin-top: 4px; }
+
+.tab-panel { display: none; }
+
+.tab-panel.active {
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+  gap: 18px;
+}
+
+@media (max-width: 900px) {
+  .tab-panel.active { grid-template-columns: minmax(0, 1fr); }
+  header { flex-direction: column; align-items: flex-start; }
+  .tabs { width: 100%; justify-content: space-between; }
+}
+
+.panel {
+  background: radial-gradient(circle at top, rgba(51, 65, 85, 0.16), transparent 60%),
+              linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.92));
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  border: 1px solid rgba(51, 65, 85, 0.8);
+  box-shadow: var(--shadow-soft);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.panel-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  max-width: 460px;
+}
+
+.badge {
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.12);
+  border: 1px solid rgba(34, 197, 178, 0.4);
+  color: #a5f3fc;
+  white-space: nowrap;
+}
+
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.metric-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.96));
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-subtle);
+  padding: 10px 11px 11px;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.metric-value {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.metric-value.danger { color: var(--danger); }
+.metric-value.good { color: var(--good); }
+.metric-value.accent { color: #7dd3fc; }
+
+.metric-caption {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.metric-pill {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: #e0f2fe;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+}
+
+.flow-section {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(75, 85, 99, 0.7);
+}
+
+.flow-title {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.flow-diagram {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-size: 11px;
+}
+
+.flow-box {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #020617;
+  border: 1px solid rgba(75, 85, 99, 0.9);
+  white-space: nowrap;
+}
+
+.flow-arrow { color: var(--text-muted); }
+.flow-box.good {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.6);
+  color: #e0f2fe;
+}
+.flow-box.danger {
+  background: rgba(248, 113, 113, 0.08);
+  border-color: rgba(248, 113, 113, 0.6);
+  color: #fecaca;
+}
+
+.right-panel-section { margin-bottom: 16px; }
+.right-panel-title { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+
+.note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.45;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.category-card {
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-subtle);
+  background: rgba(15, 23, 42, 0.92);
+  padding: 9px 10px 10px;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.category-title {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 3px;
+  color: var(--text-main);
+}
+
+/* Tab 2 – Calculator */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.form-field { display: flex; flex-direction: column; gap: 3px; font-size: 11px; }
+
+.form-label { color: var(--text-muted); }
+
+.form-input {
+  border-radius: 9px;
+  border: 1px solid var(--border-subtle);
+  background: rgba(15, 23, 42, 0.95);
+  color: var(--text-main);
+  padding: 6px 8px;
+  font-size: 12px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: rgba(56, 189, 248, 0.8);
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+}
+
+.small-hint { font-size: 10px; color: var(--text-muted); }
+.calculator-note { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+.warning {
+  margin-top: 8px;
+  padding: 6px 8px;
+  border-radius: 9px;
+  font-size: 11px;
+  background: rgba(248, 113, 113, 0.08);
+  border: 1px solid rgba(248, 113, 113, 0.6);
+  color: #fecaca;
+}
+
+.pill-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+
+.pill {
+  font-size: 11px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(55, 65, 81, 0.9);
+  color: var(--text-muted);
+}
+
+.pill strong { color: var(--text-main); }
+
+/* Tab 3 – Comparison */
+.city-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.city-card {
+  border-radius: var(--card-radius);
+  border: 1px solid var(--border-subtle);
+  background: rgba(15, 23, 42, 0.95);
+  padding: 10px 11px;
+  font-size: 11px;
+}
+
+.city-name {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.city-tag {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.city-line { display: flex; justify-content: space-between; margin-top: 2px; }
+.city-label { color: var(--text-muted); }
+.city-value { font-weight: 500; }
+
+.bar-chart {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(75, 85, 99, 0.7);
+  font-size: 11px;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.bar-label { width: 90px; color: var(--text-muted); }
+.bar-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #38bdf8, #6366f1);
+}
+
+.bar-value { width: 40px; text-align: right; }
+
+footer {
+  margin-top: 20px;
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-top: 1px solid rgba(31, 41, 55, 0.9);
+  padding-top: 10px;
+}
+```
+
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">H</div>
+        <div class="brand-title">
+          <div class="brand-title-main">Hidden Cost Index</div>
+          <div class="brand-title-sub">Dashboard · hiddencostindex.co.za</div>
+        </div>
+      </div>
+      <nav class="tabs" aria-label="Primary navigation">
+        <button class="tab active" data-tab="explainer">Tab 1 – Explainer</button>
+        <button class="tab" data-tab="calculator">Tab 2 – Calculator</button>
+        <button class="tab" data-tab="comparison">Tab 3 – City comparison</button>
+      </nav>
+      <div style="display:flex;gap:8px;font-size:11px;">
+        <a href="index.html" class="tab" style="background:rgba(15,23,42,0.8);color:var(--text-muted);cursor:pointer;">Home</a>
+        <a href="methodology.html" class="tab" style="background:rgba(15,23,42,0.8);color:var(--text-muted);cursor:pointer;">Methodology</a>
+        <a href="about.html" class="tab" style="background:rgba(15,23,42,0.8);color:var(--text-muted);cursor:pointer;">About</a>
+      </div>
+    </header>
+
+```
+<main>
+  <!-- TAB 1: EXPLAINER -->
+  <section class="tab-panel active" id="tab-explainer">
+    <!-- Left panel -->
+    <section class="panel" aria-labelledby="explainer-title">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title" id="explainer-title">Explainer: Hidden Cost Model</h1>
+          <p class="panel-subtitle">
+            The Hidden Cost Index groups “system failure costs” into six buckets and shows how much they erode your
+            income before you ever get to lifestyle. This panel explains the logic. The next tabs let you run your own numbers and compare cities.
+          </p>
+        </div>
+        <span class="badge">Tab 1 · Concept</span>
+      </div>
+
+      <div class="hero-metrics">
+        <article class="metric-card">
+          <div class="metric-pill">Example · Urban SA household</div>
+          <div class="metric-label">Net household income</div>
+          <div class="metric-value accent">R 35,000</div>
+          <div class="metric-caption">After PAYE, UIF and standard deductions</div>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-label">Hidden cost total</div>
+          <div class="metric-value danger">R 11,800</div>
+          <div class="metric-caption">Security, load shedding, medical aid, transport, crime, education</div>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-label">Shadow tax rate</div>
+          <div class="metric-value">31%</div>
+          <div class="metric-caption">Hidden costs as share of gross income</div>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-label">True disposable income</div>
+          <div class="metric-value good">R 23,200</div>
+          <div class="metric-caption">What is actually left to live on</div>
+        </article>
+      </div>
+
+      <div class="flow-section">
+        <div class="flow-title">How the model treats your money</div>
+        <div class="flow-diagram">
+          <div class="flow-box">Gross income</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-box">Tax & statutory deductions</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-box">Net income</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-box danger">Hidden costs (system failure)</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-box good">True disposable income</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right panel -->
+    <section class="panel" aria-labelledby="categories-title">
+      <div class="right-panel-section">
+        <h2 class="right-panel-title" id="categories-title">Hidden cost categories</h2>
+        <p class="note">
+          Hidden costs are recurring monthly amounts paid not to improve your lifestyle, but to replace basic
+          infrastructure, safety and services that should exist by default in a functioning system.
+        </p>
+      </div>
+
+      <div class="right-panel-section">
+        <div class="category-grid">
+          <article class="category-card">
+            <div class="category-title">Security tax</div>
+            Armed response, electric fencing, cameras, guard levies and crime-loaded insurance premiums.
+          </article>
+          <article class="category-card">
+            <div class="category-title">Infrastructure failure</div>
+            Inverters, batteries, generators, backup fibre/LTE, water storage and surge-damaged appliances.
+          </article>
+          <article class="category-card">
+            <div class="category-title">Health system gap</div>
+            Medical aid, gap cover and out-of-pocket healthcare spend because the public system is not reliable.
+          </article>
+          <article class="category-card">
+            <div class="category-title">Transport penalty</div>
+            Car instalments, fuel, maintenance and insurance where public transport is not a safe or usable default.
+          </article>
+          <article class="category-card">
+            <div class="category-title">Education uplift</div>
+            Private or semi-private school fees and extra lessons where public schools are not realistically viable.
+          </article>
+          <article class="category-card">
+            <div class="category-title">Crime & risk premium</div>
+            Higher excesses, recurring loss and self-insurance for theft and damage that are structurally priced in.
+          </article>
+        </div>
+      </div>
+
+      <div class="right-panel-section">
+        <h3 class="right-panel-title">What the dashboard calculates</h3>
+        <div class="pill-list">
+          <div class="pill"><strong>Hidden Cost Total</strong> – R/month across all categories</div>
+          <div class="pill"><strong>Shadow Tax Rate</strong> – hidden cost as % of gross income</div>
+          <div class="pill"><strong>True Disposable Income</strong> – net income minus hidden cost</div>
+          <div class="pill"><strong>Hidden Cost Index (HCI)</strong> – hidden cost vs basic cost-of-living</div>
+        </div>
+        <p class="note" style="margin-top:6px;">
+          Move to Tab 2 to enter your own numbers, or Tab 3 to compare cities and scenarios.
+        </p>
+      </div>
+    </section>
+  </section>
+
+  <!-- TAB 2: CALCULATOR -->
+  <section class="tab-panel" id="tab-calculator">
+    <!-- Left: form -->
+    <section class="panel" aria-labelledby="calc-title">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title" id="calc-title">Hidden Cost Calculator</h1>
+          <p class="panel-subtitle">
+            Enter your monthly numbers below. The model will estimate your hidden cost total, the shadow tax rate,
+            your true disposable income, and a simple Hidden Cost Index. All amounts are in South African Rand (R).
+          </p>
+        </div>
+        <span class="badge">Tab 2 · Interactive</span>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label" for="gross-income">Gross income (household, monthly)</label>
+          <input id="gross-income" class="form-input" type="number" min="0" step="500" placeholder="e.g. 45000" />
+          <div class="small-hint">Before PAYE and deductions. Used to compute the shadow tax.</div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="net-income">Net income (take-home, monthly)</label>
+          <input id="net-income" class="form-input" type="number" min="0" step="500" placeholder="e.g. 35000" />
+          <div class="small-hint">If left blank, we estimate ~75% of gross.</div>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="core-cost">Basic life cost (rent + food + utilities)</label>
+          <input id="core-cost" class="form-input" type="number" min="0" step="500" placeholder="e.g. 20000" />
+          <div class="small-hint">Used as the denominator for the Hidden Cost Index (HCI).</div>
+        </div>
+      </div>
+
+      <hr style="border:none;border-top:1px dashed rgba(75,85,99,0.7);margin:10px 0 12px;" />
+
+      <p class="calculator-note">
+        Hidden cost categories – monthly spend to “patch the system”, not to upgrade your lifestyle.
+      </p>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label" for="sec-cost">Security</label>
+          <input id="sec-cost" class="form-input" type="number" min="0" step="100" placeholder="Armed response, cameras, levies" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="infra-cost">Infrastructure failure</label>
+          <input id="infra-cost" class="form-input" type="number" min="0" step="100" placeholder="Inverter, generator, backup ISP" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="health-cost">Health system gap</label>
+          <input id="health-cost" class="form-input" type="number" min="0" step="100" placeholder="Medical aid, gap cover, GP spend" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="transport-cost">Transport penalty</label>
+          <input id="transport-cost" class="form-input" type="number" min="0" step="100" placeholder="Car instalment, fuel, insurance" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="edu-cost">Education uplift</label>
+          <input id="edu-cost" class="form-input" type="number" min="0" step="100" placeholder="School fees, extra lessons" />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label" for="crime-cost">Crime & risk premium</label>
+          <input id="crime-cost" class="form-input" type="number" min="0" step="100" placeholder="Excesses, self-insurance, losses" />
+        </div>
+      </div>
+
+      <p class="calculator-note">
+        The dashboard updates automatically as you type. If a field doesn’t apply, leave it on zero.
+      </p>
+
+      <div id="warning-box" class="warning" style="display:none;">
+        Your hidden costs are consuming a large share of your income. The Shadow Tax Rate and HCI are flagged as high.
+      </div>
+    </section>
+
+    <!-- Right: results -->
+    <section class="panel" aria-labelledby="results-title">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title" id="results-title">Results</h2>
+          <p class="panel-subtitle">
+            These metrics are computed from your inputs. They do not judge how you spend; they show how much is being
+            forced into system failure rather than actual living.
+          </p>
+        </div>
+        <span class="badge">Model outputs</span>
+      </div>
+
+      <div class="hero-metrics">
+        <article class="metric-card">
+          <div class="metric-label">Hidden cost total</div>
+          <div id="out-hidden-total" class="metric-value danger">R 0</div>
+          <div class="metric-caption">Sum of security, infrastructure, health, transport, education, crime</div>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-label">Shadow tax rate</div>
+          <div id="out-shadow-tax" class="metric-value">0%</div>
+          <div class="metric-caption">Hidden costs ÷ gross income</div>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-label">True disposable income</div>
+          <div id="out-true-disposable" class="metric-value good">R 0</div>
+          <div class="metric-caption">Net income minus hidden cost</div>
+        </article>
+
+        <article class="metric-card">
+          <div class="metric-label">Hidden Cost Index (HCI)</div>
+          <div id="out-hci" class="metric-value accent">0</div>
+          <div class="metric-caption">Hidden cost ÷ basic life cost (rent + food + utilities)</div>
+        </article>
+      </div>
+
+      <div class="right-panel-section">
+        <h3 class="right-panel-title">How to read this</h3>
+        <div class="pill-list">
+          <div class="pill">
+            <strong>Shadow Tax Rate &gt; 25%</strong> – a sizeable share of gross income is going to system failure.
+          </div>
+          <div class="pill">
+            <strong>HCI ≈ 50</strong> – hidden costs equal half of your basic cost-of-living.
+          </div>
+          <div class="pill">
+            <strong>HCI ≥ 100</strong> – hidden costs match or exceed your core life expenses.
+          </div>
+        </div>
+        <p class="note">
+          These are descriptive, not prescriptive. The point is not to tell you what to cut, but to show you how much
+          of your income is functioning as an invisible survival tax.
+        </p>
+      </div>
+    </section>
+  </section>
+
+  <!-- TAB 3: CITY COMPARISON -->
+  <section class="tab-panel" id="tab-comparison">
+    <!-- Left: summary + chart -->
+    <section class="panel" aria-labelledby="compare-title">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-title" id="compare-title">City comparison</h1>
+          <p class="panel-subtitle">
+            Four stylised scenarios: Johannesburg, Cape Town, Melbourne and Shenzhen. Each profile uses typical
+            income, basic life cost and hidden cost assumptions to show how hard the system leans on households.
+          </p>
+        </div>
+        <span class="badge">Tab 3 · Scenarios</span>
+      </div>
+
+      <div class="hero-metrics">
+        <article class="metric-card">
+          <div class="metric-label">Hidden Cost Index (HCI)</div>
+          <div id="hci-jhb" class="metric-value danger">–</div>
+          <div class="metric-caption">Johannesburg · Hidden cost ÷ basic life cost</div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">HCI – Cape Town</div>
+          <div id="hci-cpt" class="metric-value danger">–</div>
+          <div class="metric-caption">Cape Town · higher rent, similar hidden cost structure</div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">HCI – Melbourne</div>
+          <div id="hci-mel" class="metric-value accent">–</div>
+          <div class="metric-caption">Melbourne · high core cost, lower hidden system failure cost</div>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label">HCI – Shenzhen</div>
+          <div id="hci-shz" class="metric-value good">–</div>
+          <div class="metric-caption">Shenzhen · low security / infra cost, high savings potential</div>
+        </article>
+      </div>
+
+      <div class="bar-chart" aria-label="Relative hidden cost index by city">
+        <div class="flow-title" style="margin-bottom:4px;">Hidden Cost Index by city</div>
+        <p class="note">
+          Values are stylised. HCI = 100 means hidden costs equal your basic cost-of-living (rent + food + utilities).
+        </p>
+
+        <div class="bar-row">
+          <div class="bar-label">Johannesburg</div>
+          <div class="bar-track"><div id="bar-jhb" class="bar-fill" style="width:0%"></div></div>
+          <div id="bar-val-jhb" class="bar-value">–</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Cape Town</div>
+          <div class="bar-track"><div id="bar-cpt" class="bar-fill" style="width:0%"></div></div>
+          <div id="bar-val-cpt" class="bar-value">–</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Melbourne</div>
+          <div class="bar-track"><div id="bar-mel" class="bar-fill" style="width:0%"></div></div>
+          <div id="bar-val-mel" class="bar-value">–</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">Shenzhen</div>
+          <div class="bar-track"><div id="bar-shz" class="bar-fill" style="width:0%"></div></div>
+          <div id="bar-val-shz" class="bar-value">–</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right: scenario cards -->
+    <section class="panel" aria-labelledby="scenario-title">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title" id="scenario-title">Scenario assumptions</h2>
+          <p class="panel-subtitle">
+            These are simple, illustrative profiles. They are not personalised budgets. The goal is to show relative
+            pressure from hidden costs, not exact household finances.
+          </p>
+        </div>
+        <span class="badge">Profiles</span>
+      </div>
+
+      <div class="city-list">
+        <article class="city-card" id="card-jhb">
+          <div class="city-name">Johannesburg</div>
+          <div class="city-tag">Mid-income, car-dependent, typical security setup</div>
+          <div class="city-line"><span class="city-label">Net income</span><span class="city-value" id="jhb-net">–</span></div>
+          <div class="city-line"><span class="city-label">Basic cost</span><span class="city-value" id="jhb-core">–</span></div>
+          <div class="city-line"><span class="city-label">Hidden cost</span><span class="city-value" id="jhb-hidden">–</span></div>
+          <div class="city-line"><span class="city-label">True disposable</span><span class="city-value" id="jhb-true">–</span></div>
+        </article>
+
+        <article class="city-card" id="card-cpt">
+          <div class="city-name">Cape Town</div>
+          <div class="city-tag">Higher rent, similar risk profile, similar medical burden</div>
+          <div class="city-line"><span class="city-label">Net income</span><span class="city-value" id="cpt-net">–</span></div>
+          <div class="city-line"><span class="city-label">Basic cost</span><span class="city-value" id="cpt-core">–</span></div>
+          <div class="city-line"><span class="city-label">Hidden cost</span><span class="city-value" id="cpt-hidden">–</span></div>
+          <div class="city-line"><span class="city-label">True disposable</span><span class="city-value" id="cpt-true">–</span></div>
+        </article>
+
+        <article class="city-card" id="card-mel">
+          <div class="city-name">Melbourne</div>
+          <div class="city-tag">High basic cost, low security and infra failure</div>
+          <div class="city-line"><span class="city-label">Net income</span><span class="city-value" id="mel-net">–</span></div>
+          <div class="city-line"><span class="city-label">Basic cost</span><span class="city-value" id="mel-core">–</span></div>
+          <div class="city-line"><span class="city-label">Hidden cost</span><span class="city-value" id="mel-hidden">–</span></div>
+          <div class="city-line"><span class="city-label">True disposable</span><span class="city-value" id="mel-true">–</span></div>
+        </article>
+
+        <article class="city-card" id="card-shz">
+          <div class="city-name">Shenzhen</div>
+          <div class="city-tag">Teacher scenario: high net income, low security / infra burden</div>
+          <div class="city-line"><span class="city-label">Net income</span><span class="city-value" id="shz-net">–</span></div>
+          <div class="city-line"><span class="city-label">Basic cost</span><span class="city-value" id="shz-core">–</span></div>
+          <div class="city-line"><span class="city-label">Hidden cost</span><span class="city-value" id="shz-hidden">–</span></div>
+          <div class="city-line"><span class="city-label">True disposable</span><span class="city-value" id="shz-true">–</span></div>
+        </article>
+      </div>
+
+      <p class="note" style="margin-top:10px;">
+        In a later version, these profiles can be driven from live or API-fed baseline data per city (fuel prices,
+        rent indices, crime stats, load shedding severity and medical inflation).
+      </p>
+    </section>
+  </section>
+</main>
+
+<footer>
+  <span>Hidden Cost Index · Dashboard · Tabs 1–3</span>
+  <span><a href="index.html">Home</a> · <a href="methodology.html">Methodology</a> · <a href="about.html">About</a></span>
+</footer>
+```
+
+  </div>
+
+  <script>
+    // Tab switching
+    const tabs = document.querySelectorAll('.tab');
+    const panels = {
+      explainer: document.getElementById('tab-explainer'),
+      calculator: document.getElementById('tab-calculator'),
+      comparison: document.getElementById('tab-comparison')
+    };
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.getAttribute('data-tab');
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        Object.entries(panels).forEach(([key, panel]) => {
+          panel.classList.toggle('active', key === target);
+        });
+      });
+    });
+
+    // ---------- Tab 2: Calculator logic ----------
+    const grossEl = document.getElementById('gross-income');
+    const netEl = document.getElementById('net-income');
+    const coreEl = document.getElementById('core-cost');
+    const secEl = document.getElementById('sec-cost');
+    const infraEl = document.getElementById('infra-cost');
+    const healthEl = document.getElementById('health-cost');
+    const transEl = document.getElementById('transport-cost');
+    const eduEl = document.getElementById('edu-cost');
+    const crimeEl = document.getElementById('crime-cost');
+
+    const outHidden = document.getElementById('out-hidden-total');
+    const outShadow = document.getElementById('out-shadow-tax');
+    const outTrue = document.getElementById('out-true-disposable');
+    const outHci = document.getElementById('out-hci');
+    const warningBox = document.getElementById('warning-box');
+
+    const inputs = [grossEl, netEl, coreEl, secEl, infraEl, healthEl, transEl, eduEl, crimeEl];
+
+    function toNum(el) {
+      const v = parseFloat(el.value);
+      return isNaN(v) ? 0 : v;
+    }
+
+    function fmtR(x) {
+      return 'R ' + x.toLocaleString('en-ZA', { maximumFractionDigits: 0 });
+    }
+
+    function fmtPct(x) {
+      return x.toFixed(1).replace(/\.0$/, '') + '%';
+    }
+
+    function recalc() {
+      const gross = toNum(grossEl);
+      let net = toNum(netEl);
+      if (!net && gross) {
+        net = gross * 0.75; // default assumption
+      }
+      const core = toNum(coreEl);
+
+      const hidden = toNum(secEl) + toNum(infraEl) + toNum(healthEl) +
+                     toNum(transEl) + toNum(eduEl) + toNum(crimeEl);
+
+      const trueDisp = Math.max(net - hidden, 0);
+
+      let shadow = 0;
+      if (gross > 0 && hidden > 0) {
+        shadow = (hidden / gross) * 100;
+      }
+
+      let hci = 0;
+      if (core > 0 && hidden > 0) {
+        hci = (hidden / core) * 100;
+      }
+
+      outHidden.textContent = fmtR(hidden);
+      outTrue.textContent = fmtR(trueDisp);
+      outShadow.textContent = fmtPct(shadow);
+      outHci.textContent = hci.toFixed(1).replace(/\.0$/, '');
+
+      // Warning conditions: high shadow tax or HCI
+      if ((shadow >= 25 && hidden > 0) || hci >= 75) {
+        warningBox.style.display = 'block';
+      } else {
+        warningBox.style.display = 'none';
+      }
+    }
+
+    inputs.forEach(el => el.addEventListener('input', recalc));
+
+    // ---------- Tab 3: City comparison logic ----------
+
+    const scenarios = {
+      jhb: {
+        net: 35000,
+        core: 20000,   // rent + basics
+        hidden: 11800  // as per earlier example
+      },
+      cpt: {
+        net: 38000,
+        core: 24000,
+        hidden: 13000
+      },
+      mel: {
+        net: 55000,    // rough R equivalent of mid Aussie after tax
+        core: 38000,
+        hidden: 6000   // small security/infra/health uplift beyond tax
+      },
+      shz: {
+        net: 52000,    // 20.5k RMB net * ~R2.5
+        core: 20000,
+        hidden: 4000   // low security/infra/health; some medical/private extras
+      }
+    };
+
+    function computeHci(hidden, core) {
+      if (!core || !hidden) return 0;
+      return (hidden / core) * 100;
+    }
+
+    function fillScenario(id, data) {
+      const trueDisp = Math.max(data.net - data.hidden, 0);
+      const hciVal = computeHci(data.hidden, data.core);
+
+      document.getElementById(id + '-net').textContent = fmtR(data.net);
+      document.getElementById(id + '-core').textContent = fmtR(data.core);
+      document.getElementById(id + '-hidden').textContent = fmtR(data.hidden);
+      document.getElementById(id + '-true').textContent = fmtR(trueDisp);
+
+      return hciVal;
+    }
+
+    function setHciDisplay(elementId, value, type) {
+      const el = document.getElementById(elementId);
+      el.textContent = value.toFixed(1).replace(/\.0$/, '');
+      if (type === 'sa' && value >= 50) {
+        el.classList.add('danger');
+      } else if (type === 'foreign' && value <= 30) {
+        el.classList.add('good');
+      } else {
+        el.classList.add('accent');
+      }
+    }
+
+    function setBar(idPrefix, hciVal) {
+      const width = Math.max(0, Math.min(hciVal, 140)); // cap at 140% for sanity
+      const bar = document.getElementById('bar-' + idPrefix);
+      const label = document.getElementById('bar-val-' + idPrefix);
+      bar.style.width = width + '%';
+      label.textContent = hciVal.toFixed(0);
+    }
+
+    function initScenarios() {
+      const hciJhb = fillScenario('jhb', scenarios.jhb);
+      const hciCpt = fillScenario('cpt', scenarios.cpt);
+      const hciMel = fillScenario('mel', scenarios.mel);
+      const hciShz = fillScenario('shz', scenarios.shz);
+
+      setHciDisplay('hci-jhb', hciJhb, 'sa');
+      setHciDisplay('hci-cpt', hciCpt, 'sa');
+      setHciDisplay('hci-mel', hciMel, 'foreign');
+      setHciDisplay('hci-shz', hciShz, 'foreign');
+
+      setBar('jhb', hciJhb);
+      setBar('cpt', hciCpt);
+      setBar('mel', hciMel);
+      setBar('shz', hciShz);
+    }
+
+    // Initialise comparison tab once on load
+    initScenarios();
+  </script>
+
+</body>
+</html>

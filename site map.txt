@@ -1,0 +1,168 @@
+═══════════════════════════════════════════════════════════════════
+HIDDEN COST INDEX – SITE MAP & NAVIGATION STRUCTURE
+═══════════════════════════════════════════════════════════════════
+
+```
+                ┌─────────────────┐
+                │   INDEX.HTML    │
+                │  (Landing Page) │
+                └────────┬────────┘
+                         │
+                         │ Primary CTA: "Launch Dashboard"
+                         │
+      ┌──────────────────┼──────────────────┐
+      │                  │                  │
+      ▼                  ▼                  ▼
+```
+
+┌──────────┐     ┌──────────────┐    ┌──────────┐
+│DASHBOARD │     │ METHODOLOGY  │    │  ABOUT   │
+│   .HTML  │     │    .HTML     │    │  .HTML   │
+└────┬─────┘     └──────────────┘    └──────────┘
+│
+│ Internal Tab Navigation
+│
+┌───┴───┬───────┬────────┐
+│       │       │        │
+▼       ▼       ▼        │
+┌───┐  ┌───┐  ┌───┐       │
+│ T │  │ T │  │ T │       │
+│ A │  │ A │  │ A │       │
+│ B │  │ B │  │ B │       │
+│   │  │   │  │   │       │
+│ 1 │  │ 2 │  │ 3 │       │
+└───┘  └───┘  └───┘       │
+│      │      │          │
+│      │      │          │
+▼      ▼      ▼          │
+┌─────┐┌──────┐┌──────┐     │
+│Expl.││Calc. ││City  │     │
+│ainer││ulator││Comp. │     │
+└─────┘└──────┘└──────┘     │
+│
+┌────────────────────────┘
+│
+│ All pages cross-link via navigation header
+│
+└─────────────────────────┐
+│
+═══════════════════════════════════════════════════════════════════
+
+PAGE DETAILS:
+
+┌─────────────────────────────────────────────────────────────────┐
+│ INDEX.HTML – Landing Page                                      │
+├─────────────────────────────────────────────────────────────────┤
+│ Header:    Brand logo + nav (Methodology, About, Dashboard CTA)│
+│ Hero:      Main value prop + 2 CTAs                            │
+│ Metrics:   4 example cards (Net, Hidden, Shadow Tax, True Disp)│
+│ Sidebar:   6 category explainers                               │
+│ Footer:    Copyright + quick link to dashboard                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ DASHBOARD.HTML – Interactive Dashboard (3 Tabs)                │
+├─────────────────────────────────────────────────────────────────┤
+│ Header:    Brand logo + tab switcher + site nav links          │
+│                                                                 │
+│ TAB 1 – EXPLAINER                                               │
+│   Left:  Model logic, example metrics, flow diagram            │
+│   Right: Category definitions, output descriptions             │
+│                                                                 │
+│ TAB 2 – CALCULATOR (INTERACTIVE)                                │
+│   Left:  Input form (gross, net, basic cost + 6 categories)    │
+│   Right: Live results (4 metrics, interpretation guide)        │
+│                                                                 │
+│ TAB 3 – CITY COMPARISON                                         │
+│   Left:  HCI bar chart for 4 cities + scenario assumptions     │
+│   Right: Detailed city cards with breakdowns                   │
+│                                                                 │
+│ Footer:  Site nav links                                         │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ METHODOLOGY.HTML – Technical Documentation                      │
+├─────────────────────────────────────────────────────────────────┤
+│ Header:    Brand logo + nav (current page highlighted)         │
+│ Section 1: Core definitions (income concepts, hidden cost)     │
+│ Section 2: Mathematical structure (formulas, code blocks)      │
+│ Section 3: Data inputs (user-provided + planned external)      │
+│ Section 4: Interpretation & limitations                        │
+│ Section 5: Roadmap                                             │
+│ Footer:    Site nav links                                       │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ ABOUT.HTML – About, FAQ, Contact                               │
+├─────────────────────────────────────────────────────────────────┤
+│ Header:    Brand logo + nav (current page highlighted)         │
+│ Section 1: About the project (what it is / isn’t)              │
+│ Section 2: FAQ (6 common questions)                            │
+│ Section 3: Contact & feedback, disclaimer                      │
+│ Footer:    Site nav links                                       │
+└─────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════
+
+NAVIGATION MATRIX:
+
+```
+          ┌────────────────────────────────────────────────┐
+          │         FROM → TO                              │
+          ├────────┬───────┬───────┬─────────┬────────────┤
+          │        │ Index │Dashbrd│Methodlgy│   About    │
+```
+
+┌───────────┼────────┼───────┼───────┼─────────┼────────────┤
+│ Index     │   •    │  ✓✓   │   ✓   │    ✓    │  (current) │
+│ Dashboard │   ✓    │   •   │   ✓   │    ✓    │            │
+│ Methodlgy │   ✓    │   ✓   │   •   │    ✓    │            │
+│ About     │   ✓    │   ✓   │   ✓   │    •    │            │
+└───────────┴────────┴───────┴───────┴─────────┴────────────┘
+
+```
+           ✓✓ = Primary CTA
+           ✓  = Header nav link
+           •  = Current page
+```
+
+═══════════════════════════════════════════════════════════════════
+
+USER JOURNEYS:
+
+Journey 1 – Quick Calculator
+index.html → dashboard.html (Tab 2) → enter numbers → see results
+
+Journey 2 – Learn First, Calculate Later
+index.html → dashboard.html (Tab 1) → Tab 2 → calculate
+
+Journey 3 – Compare Cities
+index.html → dashboard.html (Tab 3) → see comparisons
+
+Journey 4 – Understand Methodology
+index.html → methodology.html → understand formulas → back to calc
+
+Journey 5 – Media/Researcher
+index.html → methodology.html → about.html → contact
+
+═══════════════════════════════════════════════════════════════════
+
+COLOR PALETTE & BRANDING:
+
+Primary:   #38bdf8 (Sky Blue)
+Secondary: #6366f1 (Indigo)
+Danger:    #fb7185 (Rose)
+Success:   #4ade80 (Green)
+
+Backgrounds:
+Dark:      #020617 (Navy Black)
+Card:      #0f1729 (Slate)
+Gradient:  Radial (Navy → Black)
+
+Text:
+Main:      #f9fafb (Off White)
+Muted:     #9ca3af (Gray)
+
+Logo: “H” in gradient circle with glow effect
+
+═══════════════════════════════════════════════════════════════════

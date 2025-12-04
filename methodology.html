@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hidden Cost Index — Methodology</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020617; --accent: #38bdf8; --accent-2: #6366f1;
+      --text-main: #f9fafb; --text-muted: #9ca3af; --border-subtle: #1f2937;
+      --card-radius: 14px; --shadow-soft: 0 24px 60px rgba(0, 0, 0, 0.6);
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: var(--font-sans);
+      background: radial-gradient(circle at top left, #111827 0, #020617 42%, #000 100%);
+      color: var(--text-main); -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .page {
+      max-width: 960px; margin: 0 auto; padding: 16px 16px 32px;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 14px; padding: 12px 0 14px; flex-wrap: wrap;
+    }
+    .brand { display: flex; gap: 10px; align-items: center; }
+    .brand-logo {
+      width: 30px; height: 30px; border-radius: 999px;
+      background: radial-gradient(circle at 20% 20%, #38bdf8, #0ea5e9 35%, #020617 70%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; color: #e0f2fe;
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.7);
+    }
+    .brand-text { display: flex; flex-direction: column; gap: 1px; }
+    .brand-main { font-size: 17px; font-weight: 600; }
+    .brand-sub { font-size: 11px; color: var(--text-muted); }
+    .nav-links {
+      display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: var(--text-muted);
+    }
+    .nav-link {
+      padding: 5px 9px; border-radius: 999px; border: 1px solid transparent;
+    }
+    .nav-link:hover {
+      border-color: rgba(148, 163, 184, 0.7); background: rgba(15, 23, 42, 0.9);
+      color: var(--text-main);
+    }
+    .nav-link.active {
+      border-color: rgba(148, 163, 184, 0.7); background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+    }
+    main { flex: 1; }
+    .card {
+      background: radial-gradient(circle at top, rgba(148, 163, 184, 0.2), transparent 55%),
+                  linear-gradient(140deg, rgba(15, 23, 42, 0.97), rgba(15, 23, 42, 0.94));
+      border-radius: 18px; border: 1px solid rgba(55, 65, 81, 0.95);
+      box-shadow: var(--shadow-soft); padding: 18px 18px 16px; margin-bottom: 14px;
+    }
+    h1 { font-size: 22px; margin: 0 0 6px; }
+    h2 { font-size: 15px; margin: 12px 0 6px; }
+    h3 { font-size: 13px; margin: 8px 0 4px; }
+    p {
+      font-size: 12px; color: var(--text-muted); line-height: 1.6; margin: 4px 0 6px;
+    }
+    .tagline { font-size: 12px; color: var(--text-muted); max-width: 600px; }
+    .badge {
+      font-size: 11px; padding: 3px 9px; border-radius: 999px;
+      border: 1px solid rgba(56, 189, 248, 0.6); background: rgba(56, 189, 248, 0.1);
+      color: #e0f2fe;
+    }
+    .grid-2 {
+      display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 14px;
+    }
+    @media (max-width: 800px) {
+      .grid-2 { grid-template-columns: minmax(0, 1fr); }
+    }
+    .list { margin: 4px 0 4px 14px; padding: 0; }
+    .list li {
+      font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 3px;
+    }
+    .code-block {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 11px; background: rgba(15, 23, 42, 0.98); border-radius: 10px;
+      border: 1px solid var(--border-subtle); padding: 8px 10px; color: #e5e7eb;
+      overflow-x: auto; white-space: pre; margin: 6px 0;
+    }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .pill {
+      font-size: 11px; padding: 4px 9px; border-radius: 999px;
+      background: rgba(15, 23, 42, 0.94); border: 1px solid rgba(75, 85, 99, 0.9);
+      color: var(--text-muted);
+    }
+    .pill strong { color: var(--text-main); }
+    footer {
+      padding-top: 10px; font-size: 11px; color: var(--text-muted);
+      border-top: 1px solid rgba(31, 41, 55, 0.9); margin-top: 12px;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">H</div>
+        <div class="brand-text">
+          <div class="brand-main">Hidden Cost Index</div>
+          <div class="brand-sub">Methodology · hiddencostindex.co.za</div>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <span class="nav-link active">Methodology</span>
+        <a href="about.html" class="nav-link">About</a>
+      </nav>
+    </header>
+
+```
+<main>
+  <section class="card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+      <div>
+        <h1>Methodology</h1>
+        <p class="tagline">
+          The Hidden Cost Index (HCI) is a descriptive model. It is not a financial product, tax calculator or
+          investment tool. It is designed to make visible the "survival costs" paid by households to compensate for
+          systemic failures in South Africa.
+        </p>
+      </div>
+      <span class="badge">Version 0.1 · Prototype</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>1. Core definitions</h2>
+    <div class="grid-2">
+      <div>
+        <h3>1.1 Income concepts</h3>
+        <ul class="list">
+          <li><strong>Gross income:</strong> total monthly income before PAYE, UIF and other deductions.</li>
+          <li><strong>Net income:</strong> monthly take-home after statutory deductions.</li>
+          <li><strong>Basic life cost:</strong> minimum recurring spend on rent/bond, basic groceries, utilities and essential communication.</li>
+          <li><strong>True disposable income:</strong> net income minus hidden costs.</li>
+        </ul>
+
+        <h3>1.2 Hidden cost</h3>
+        <p>
+          Hidden costs are recurring monthly amounts paid not to upgrade lifestyle, but to buy safety, stability and
+          basic functionality that should exist by default in a working system.
+        </p>
+      </div>
+
+      <div>
+        <h3>1.3 Categories</h3>
+        <ul class="list">
+          <li><strong>Security tax</strong> – armed response, electric fencing, cameras, guard levies and crime-loaded premiums.</li>
+          <li><strong>Infrastructure failure</strong> – inverters, batteries, generators, backup ISP, water storage, surge damage.</li>
+          <li><strong>Health system gap</strong> – medical aid, gap cover, out-of-pocket private healthcare.</li>
+          <li><strong>Transport penalty</strong> – car instalments, fuel, maintenance, insurance due to weak public transport.</li>
+          <li><strong>Education uplift</strong> – private/semi-private schooling and supplemental lessons.</li>
+          <li><strong>Crime & risk premium</strong> – higher excesses, recurring loss and self-insurance from crime exposure.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>2. Mathematical structure</h2>
+
+    <h3>2.1 Category sums</h3>
+    <div class="code-block">SECURITY_COST   = armed_response
+            + security_levies
+            + security_capex / 60
+```
+
+INFRA_COST      = backup_power_fuel
++ backup_connectivity
++ infra_capex / 60
++ appliance_damage / 12
+
+HEALTH_COST     = medical_aid
++ gap_cover
++ health_out_of_pocket
+
+TRANSPORT_COST  = Σ(installment + fuel + maintenance + insurance)
+
+EDU_COST        = Σ(school_fees + extra_lessons)
+
+CRIME_COST      = crime_insurance_uplift
++ crime_self_insured / 12</div>
+
+```
+    <h3>2.2 Aggregate hidden cost</h3>
+    <div class="code-block">HIDDEN_COST_TOTAL =
+SECURITY_COST
+```
+
+- INFRA_COST
+- HEALTH_COST
+- TRANSPORT_COST
+- EDU_COST
+- CRIME_COST</div>
+  
+  ```
+  <h3>2.3 Derived metrics</h3>
+  <div class="code-block">TRUE_DISPOSABLE =
+  ```
+  
+  NET_INCOME - HIDDEN_COST_TOTAL
+
+SHADOW_TAX_RATE =
+(HIDDEN_COST_TOTAL / GROSS_INCOME) × 100
+
+HCI (Hidden Cost Index) =
+(HIDDEN_COST_TOTAL / BASIC_LIFE_COST) × 100</div>
+
+```
+    <p>
+      Amortisation periods (60 months for capex, 12 months for average replacement / damage) are configurable and
+      documented per release.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>3. Data inputs</h2>
+    <div class="grid-2">
+      <div>
+        <h3>3.1 User-provided inputs</h3>
+        <ul class="list">
+          <li>Household gross and net income.</li>
+          <li>Rent or bond, basic groceries and utilities.</li>
+          <li>Security contracts and recurring security-related levies.</li>
+          <li>Medical aid, gap cover, out-of-pocket healthcare.</li>
+          <li>Vehicle instalments, fuel, insurance and maintenance.</li>
+          <li>Education and tutoring costs, where applicable.</li>
+          <li>Self-insurance / recurring crime-related losses.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>3.2 Baseline / external inputs (planned)</h3>
+        <ul class="list">
+          <li>Fuel price indices for transport cost defaults.</li>
+          <li>Electricity tariffs and load-shedding severity indices for infrastructure assumptions.</li>
+          <li>Stats SA CPI, with sub-indices for health, transport and insurance.</li>
+          <li>City-level cost-of-living baselines (rent, utilities, groceries) from third-party datasets.</li>
+          <li>Crime statistics at city / metro level for risk multipliers.</li>
+        </ul>
+        <p>
+          In the current prototype, these are represented as static scenario assumptions, documented in the
+          dashboard's city comparison tab.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>4. Interpretation and limitations</h2>
+    <h3>4.1 What HCI does and does not claim</h3>
+    <div class="pill-row">
+      <div class="pill"><strong>Descriptive:</strong> HCI describes cost structure; it does not give advice.</div>
+      <div class="pill"><strong>Household-level:</strong> It works at the household level, not macroeconomic modelling.</div>
+      <div class="pill"><strong>Comparative:</strong> It is designed for city-to-city and scenario comparison.</div>
+    </div>
+    <p>
+      The model does not attempt to calculate "optimal" spending, poverty thresholds or tax incidence in a formal
+      economic sense. It simply quantifies the proportion of income allocated to compensating for systemic failure.
+    </p>
+
+    <h3>4.2 Known limitations</h3>
+    <ul class="list">
+      <li>Excludes non-monetary burdens (time lost to outages, stress, health effects).</li>
+      <li>Relies on honest and accurate user input; no external validation is attempted.</li>
+      <li>Scenario profiles use rounded, stylised values to illustrate relative pressure, not exact budgets.</li>
+      <li>External data sources may have lags, coverage limitations or sampling bias.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>5. Roadmap</h2>
+    <ul class="list">
+      <li>Integrate periodic fuel price and load-shedding indices into default assumptions.</li>
+      <li>Publish city-level HCI benchmarks with methodology notes per release.</li>
+      <li>Add export tools for anonymised aggregates (for researchers, journalists and policymakers).</li>
+      <li>Extend comparison sets to additional South African and global cities.</li>
+    </ul>
+    <p>
+      Feedback on the methodology is welcome. The goal is transparency: any index that claims to describe lived
+      reality should be inspectable and falsifiable.
+    </p>
+  </section>
+</main>
+
+<footer>
+  <span>© <span id="year"></span> HiddenCostIndex.co.za · Methodology</span>
+  <span><a href="dashboard.html">Open the dashboard</a></span>
+</footer>
+```
+
+  </div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

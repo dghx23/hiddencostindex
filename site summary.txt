@@ -1,0 +1,155 @@
+═══════════════════════════════════════════════════════════════════
+HIDDEN COST INDEX – COMPLETE WEBSITE BUILD
+═══════════════════════════════════════════════════════════════════
+
+✓ DELIVERABLES
+
+5 files, 74KB total, production-ready:
+
+1. index.html         (14KB)  – Landing page with hero + metrics
+1. dashboard.html     (37KB)  – 3-tab interactive dashboard
+1. methodology.html   (13KB)  – Technical model documentation
+1. about.html         (10KB)  – About, FAQ, contact, disclaimer
+1. README.md                  – Deployment guide
+
+═══════════════════════════════════════════════════════════════════
+
+✓ SITE ARCHITECTURE
+
+Navigation Flow:
+index.html → dashboard.html (Tab 1/2/3)
+→ methodology.html
+→ about.html
+
+All pages link to each other via consistent nav
+
+═══════════════════════════════════════════════════════════════════
+
+✓ DASHBOARD FEATURES
+
+Tab 1 – Explainer
+• Model logic and definitions
+• Example metrics (R35k net → R23.2k true disposable)
+• Flow diagram showing money journey
+• 6 hidden cost categories explained
+
+Tab 2 – Calculator (INTERACTIVE)
+• User input form (income + 6 cost categories)
+• Live calculation on every keystroke
+• Outputs: Hidden Total, Shadow Tax, True Disposable, HCI
+• Warning system for high-burden households
+
+Tab 3 – City Comparison
+• 4 pre-configured scenarios
+• Johannesburg, Cape Town, Melbourne, Shenzhen
+• Visual bar charts
+• Full breakdowns per city
+
+═══════════════════════════════════════════════════════════════════
+
+✓ KEY CONCEPTS MEASURED
+
+1. Hidden Cost Total      – R/month spent on system failure
+1. Shadow Tax Rate        – Hidden costs as % of gross income
+1. True Disposable Income – Net minus hidden costs
+1. Hidden Cost Index      – Hidden costs ÷ basic living costs
+
+Example: Urban SA household
+Net income:        R35,000
+Hidden costs:      R11,800 (security, load shedding, medical, etc.)
+Shadow tax rate:   31%
+True disposable:   R23,200
+
+═══════════════════════════════════════════════════════════════════
+
+✓ DESIGN HIGHLIGHTS
+
+• Dark theme, highly readable
+• Radial gradient backgrounds
+• Responsive grid layouts (mobile → desktop)
+• No external dependencies (pure HTML/CSS/JS)
+• Consistent brand identity (logo, colors, typography)
+• Semantic HTML, accessible navigation
+
+═══════════════════════════════════════════════════════════════════
+
+✓ DEPLOYMENT CHECKLIST
+
+Before launch:
+☐ Replace placeholder email in about.html
+☐ Add favicon.png (referenced in all pages)
+☐ Add og-image.png for social sharing
+☐ Test calculator on mobile
+☐ Verify all internal links
+
+Deploy:
+• Option 1: Push to GitHub → Vercel/Netlify (auto-deploy)
+• Option 2: Upload via FTP/SFTP to web server
+• Point DNS: hiddencostindex.co.za → hosting
+
+After launch:
+☐ Add analytics (optional)
+☐ Monitor contact form submissions
+☐ Collect user feedback
+☐ Iterate on city scenarios with real data
+
+═══════════════════════════════════════════════════════════════════
+
+✓ TECHNICAL SPECS
+
+Performance:
+• Total site: 74KB (extremely lightweight)
+• No JavaScript frameworks (vanilla JS only)
+• Calculator tab: ~200 lines of JS
+• City comparison: ~100 lines of JS
+
+Browser Support:
+• All modern browsers (Chrome, Firefox, Safari, Edge)
+• Mobile browsers (iOS Safari, Chrome Mobile)
+• Graceful degradation (static pages work without JS)
+
+Privacy:
+• Calculator runs 100% client-side
+• No data sent to server
+• No cookies required
+• No external tracking (add your own if needed)
+
+═══════════════════════════════════════════════════════════════════
+
+✓ WHAT MAKES THIS DIFFERENT
+
+Most “cost of living” tools:
+• Show static CPI data
+• Don’t distinguish survival costs from lifestyle
+• Can’t compare cities meaningfully
+
+Hidden Cost Index:
+• Separates “system failure tax” from normal expenses
+• Shows true disposable income after survival costs
+• Enables SA ↔ international city comparisons
+• Quantifies the invisible burden of infrastructure collapse
+
+═══════════════════════════════════════════════════════════════════
+
+✓ NEXT EVOLUTION (Post-Launch)
+
+Phase 2 features:
+• Save/export calculator results
+• More cities (Durban, Pretoria, Nairobi, Lagos)
+• API for researchers/media
+• Live data feeds (fuel prices, CPI, load shedding)
+• Aggregate anonymized statistics
+
+Long-term:
+• City benchmarks per quarter
+• Historical HCI trends
+• Category breakdowns per income bracket
+• Research partnerships
+
+═══════════════════════════════════════════════════════════════════
+
+You now have a complete, professional, production-ready website.
+
+Upload to hiddencostindex.co.za and launch.
+
+═══════════════════════════════════════════════════════════════════
